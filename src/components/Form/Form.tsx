@@ -20,21 +20,41 @@ type ValidatePassword = {
 type FormType = {
   handleClick: () => void;
   handleNewPass: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleArrRegister: (param: ObjPassword) => void;
   objPassword: ValidatePassword;
   objPass: ObjPassword;
 };
 
-function Form({ handleClick, handleNewPass, objPassword, objPass }: FormType) {
+function Form(props: FormType) {
+  const { handleClick, handleNewPass, handleArrRegister, objPassword, objPass } = props;
   const isDisabled = () => {
     return Object.values(objPassword).includes(false);
   };
 
+  const cleanForm = () => {
+    document.querySelectorAll('input').forEach((input) => {
+      input.value = '';
+    });
+  };
+
+  const handleSetList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    cleanForm();
+    handleArrRegister(objPass);
+    handleClick();
+  };
+
   return (
-    <>
+    <section className="container content row">
       <form className="container">
+        <h3>Cadstro de gerenciamento de senha</h3>
         <div>
           <label htmlFor="service">Nome do serviço</label>
-          <input type="text" id="service" onChange={ (event) => handleNewPass(event) } />
+          <input
+            type="text"
+            id="service"
+            onChange={ (event) => handleNewPass(event) }
+          />
           <label htmlFor="login">Login</label>
           <input type="text" id="login" onChange={ (event) => handleNewPass(event) } />
         </div>
@@ -45,13 +65,19 @@ function Form({ handleClick, handleNewPass, objPassword, objPass }: FormType) {
           <input type="text" id="url" onChange={ (event) => handleNewPass(event) } />
         </div>
         <div>
-          <button id="register" disabled={ isDisabled() }>Cadastrar</button>
+          <button
+            id="register"
+            onClick={ (e) => handleSetList(e) }
+            disabled={ isDisabled() }
+          >
+            Cadastrar
+          </button>
           <button id="cancel" onClick={ handleClick }>Cancelar</button>
         </div>
+        <Display { ...objPassword } />
       </form>
-      <Display { ...objPassword } />
       <Preview objPass={ objPass } />
-    </>
+    </section>
   );
 }
 

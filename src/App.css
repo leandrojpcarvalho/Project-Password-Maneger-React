@@ -10,4 +10,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.row {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content {
+ max-width: 1000px;
 }

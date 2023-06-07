@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import BtnNewPass from './components/BtnNewPass';
+import ManagedPassList from './components/ListProduct/ManagedPassList';
 import Form, { ObjPassword } from './components/Form/Form';
+import { ObjId } from './types';
 import './App.css';
 
 const OBJ_PASS = {
@@ -23,6 +25,7 @@ function App() {
   const [objControlButton, setControlButton] = useState(false);
   const [objRegisterPass, setObjRegisterPass] = useState(OBJ_PASS);
   const [objPassword, setObjPassword] = useState(OBJ_VALIDATE);
+  const [arrRegister, setArrRegister] = useState<Array<ObjId>>([]);
 
   const handleRegisterPass = (event: React.ChangeEvent<HTMLInputElement>) => {
     setObjRegisterPass((prevObj) => {
@@ -31,6 +34,21 @@ function App() {
       return state;
     });
   };
+
+  const resetStates = () => {
+    setControlButton(false);
+    setObjRegisterPass(OBJ_PASS);
+    setObjPassword(OBJ_VALIDATE);
+  };
+
+  const handleArrRegister = (obj: ObjPassword) => {
+    const objWithId = { ...obj, id: Date.now() };
+    setArrRegister([...arrRegister, objWithId]);
+    resetStates();
+  };
+
+  const handleRmvRegister = (id: number) => setArrRegister(arrRegister
+    .filter((register) => register.id !== Number(id)));
 
   const validatePassword = (state: ObjPassword) => {
     const { service, login, password } = state;
@@ -67,14 +85,20 @@ function App() {
         <h1>Gerenciador de senhas</h1>
       </header>
       <main>
-        {objControlButton
-          ? <Form
-              handleClick={ () => setControlButton(false) }
-              handleNewPass={ handleRegisterPass }
-              objPass={ objRegisterPass }
-              objPassword={ objPassword }
+        {objControlButton ? (
+          <Form
+            handleClick={ () => resetStates() }
+            handleNewPass={ handleRegisterPass }
+            objPass={ objRegisterPass }
+            objPassword={ objPassword }
+            handleArrRegister={ handleArrRegister }
           />
-          : <BtnNewPass handleClick={ () => setControlButton(true) } />}
+        ) : (
+          <>
+            <BtnNewPass handleClick={ () => setControlButton(true) } />
+            <ManagedPassList state={ arrRegister } removeRegister={ handleRmvRegister } />
+          </>
+        )}
       </main>
     </>
   );
