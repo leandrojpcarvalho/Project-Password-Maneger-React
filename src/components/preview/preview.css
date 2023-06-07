@@ -1,0 +1,9 @@
+.card {
+  border: 1px solid gray;
+  box-shadow: 1px 1px 30px gray ;
+  display: flex;
+  flex-flow: column nowrap;
+  width: fit-content;
+  padding: 10px;
+  margin: 20px 10px;
+}

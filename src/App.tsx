@@ -1,33 +1,80 @@
 import { useState } from 'react';
-import './App.css';
-import Form from './components/Form/Form';
 import BtnNewPass from './components/BtnNewPass';
+import Form, { ObjPassword } from './components/Form/Form';
+import './App.css';
 
-const objButton = {
-  registerNewPass: false,
-  cancel_form: false,
+const OBJ_PASS = {
+  service: '',
+  login: '',
+  password: '',
+  url: '',
+};
+
+const OBJ_VALIDATE = {
+  service: false,
+  login: false,
+  charLengthMoreThanEigth: false,
+  charLengthLessThanSixTeen: false,
+  letterAndNumb: false,
+  special: false,
 };
 
 function App() {
-  const [objControlButton, setControlButton] = useState(objButton);
+  const [objControlButton, setControlButton] = useState(false);
+  const [objRegisterPass, setObjRegisterPass] = useState(OBJ_PASS);
+  const [objPassword, setObjPassword] = useState(OBJ_VALIDATE);
 
-  const handleButtonCancel = () => {
-    setControlButton({ ...objButton, cancel_form: true });
+  const handleRegisterPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setObjRegisterPass((prevObj) => {
+      const state = { ...prevObj, [event.target.id]: event.target.value };
+      validatePassword(state);
+      return state;
+    });
   };
-  const handleBtnNewPass = () => {
-    setControlButton({ ...objButton, registerNewPass: true });
+
+  const validatePassword = (state: ObjPassword) => {
+    const { service, login, password } = state;
+    setObjPassword({ ...objPassword,
+      service: service.length > 0,
+      login: login.length > 0,
+      charLengthLessThanSixTeen: password.length <= 16,
+      charLengthMoreThanEigth: password.length >= 8,
+      letterAndNumb: validateLetterAndNumber(password),
+      special: validateSpecial(password),
+    });
   };
+  const arrSpecial = ['!', '#', '@'];
+
+  const validateLetterAndNumber = (password: string) => {
+    const lett = password.split('')
+      .find((letter) => {
+        return !arrSpecial.includes(letter) && Number.isNaN(Number(letter));
+      });
+    const numb = password.split('').find((letter) => !Number.isNaN(Number(letter)));
+    return Boolean(lett) && Boolean(numb);
+  };
+  const validateSpecial = (password: string) => {
+    const hasSpecial = password.split('')
+      .find((letter) => (
+        arrSpecial.find((specialChar) => specialChar === letter)
+      ));
+    return (typeof hasSpecial === 'string');
+  };
+
   return (
     <>
       <header>
         <h1>Gerenciador de senhas</h1>
       </header>
       <main>
-        {objControlButton.registerNewPass
+        {objControlButton
           ? <Form
-              handleClick={ handleButtonCancel }
+              handleClick={ () => setControlButton(false) }
+              handleNewPass={ handleRegisterPass }
+              objPass={ objRegisterPass }
+              objPassword={ objPassword }
           />
-          : <BtnNewPass handleClick={ handleBtnNewPass } />}
+          : <BtnNewPass handleClick={ () => setControlButton(true) } />}
       </main>
     </>
   );
