@@ -3,9 +3,10 @@ import { ObjId } from '../../types';
 type CardType = {
   objPass: ObjId;
   removeRegister: (param: number) => void;
+  isChecked: boolean;
 };
 
-function Card({ objPass, removeRegister }: CardType) {
+function Card({ objPass, removeRegister, isChecked }: CardType) {
   const { service, login, password, url, id: nubmerId } = objPass;
   return (
     <section className="card">
@@ -18,10 +19,8 @@ function Card({ objPass, removeRegister }: CardType) {
         X
       </button>
       <a href={ url }>{ service }</a>
-      <ul>
-        <li>{ login}</li>
-        <li>{ password }</li>
-      </ul>
+      <p>{login}</p>
+      <input type={ isChecked ? 'text' : 'password' } value={ password } disabled />
     </section>
   );
 }

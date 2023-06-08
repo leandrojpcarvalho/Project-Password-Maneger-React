@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import BtnNewPass from './components/BtnNewPass';
-import ManagedPassList from './components/ListProduct/ManagedPassList';
+import ManagedPassList from './components/ManagedPassList/ManagedPassList';
 import Form, { ObjPassword } from './components/Form/Form';
 import { ObjId } from './types';
 import './App.css';
