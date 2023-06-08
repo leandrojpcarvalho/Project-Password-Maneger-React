@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import Display from '../Display/Display';
 import Preview from '../preview/Preview';
 
@@ -45,6 +46,13 @@ function Form(props: FormType) {
     cleanForm();
     handleArrRegister(objPass);
     handleClick();
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Serviço cadastrado com sucesso',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   const handleClickSetVisible = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
