@@ -20,7 +20,7 @@ function Card({ objPass, removeRegister, isChecked }: CardType) {
       </button>
       <a href={ url }>{ service }</a>
       <p>{login}</p>
-      <input type={ isChecked ? 'text' : 'password' } value={ password } disabled />
+      <p>{ isChecked ? '******' : password}</p>
     </section>
   );
 }
