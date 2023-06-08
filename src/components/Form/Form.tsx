@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Display from '../Display/Display';
 import Preview from '../preview/Preview';
 
@@ -26,6 +27,8 @@ type FormType = {
 };
 
 function Form(props: FormType) {
+  const [isVisible, setIsVisible] = useState(false);
+
   const { handleClick, handleNewPass, handleArrRegister, objPassword, objPass } = props;
   const isDisabled = () => {
     return Object.values(objPassword).includes(false);
@@ -44,6 +47,11 @@ function Form(props: FormType) {
     handleClick();
   };
 
+  const handleClickSetVisible = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setIsVisible(!isVisible);
+  };
+
   return (
     <section className="container content row">
       <form className="container">
@@ -59,8 +67,20 @@ function Form(props: FormType) {
           <input type="text" id="login" onChange={ (event) => handleNewPass(event) } />
         </div>
         <div>
-          <label htmlFor="password">Senha</label>
-          <input type="password" id="password" onChange={ handleNewPass } />
+          <div>
+            <label htmlFor="password">Senha</label>
+            <input
+              type={ isVisible ? 'text' : 'password' }
+              id="password"
+              onChange={ handleNewPass }
+            />
+            <button
+              data-testid="show-hide-form-password"
+              onClick={ handleClickSetVisible }
+            >
+              P
+            </button>
+          </div>
           <label htmlFor="url">URL</label>
           <input type="text" id="url" onChange={ (event) => handleNewPass(event) } />
         </div>
