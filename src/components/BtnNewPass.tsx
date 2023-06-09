@@ -5,6 +5,7 @@ export type BtnFunction = {
 function BtnNewPass({ handleClick }:BtnFunction) {
   return (
     <button
+      className="btn new-pass"
       onClick={ handleClick }
     >
       Cadastrar nova senha

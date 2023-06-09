@@ -55,7 +55,7 @@ function App() {
     setObjPassword({ ...objPassword,
       service: service.length > 0,
       login: login.length > 0,
-      charLengthLessThanSixTeen: password.length <= 16,
+      charLengthLessThanSixTeen: password.length <= 16 && password.length > 0,
       charLengthMoreThanEigth: password.length >= 8,
       letterAndNumb: validateLetterAndNumber(password),
       special: validateSpecial(password),
@@ -81,7 +81,7 @@ function App() {
 
   return (
     <>
-      <header>
+      <header className="box-shadow border">
         <h1>Gerenciador de senhas</h1>
       </header>
       <main>

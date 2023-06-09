@@ -1,5 +1,3 @@
-import './preview.css';
-
 type Data = { objPass:{
   service: string;
   login: string;
