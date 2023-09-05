@@ -27,14 +27,6 @@ function App() {
   const [objPassword, setObjPassword] = useState(OBJ_VALIDATE);
   const [arrRegister, setArrRegister] = useState<Array<ObjId>>([]);
 
-  const handleRegisterPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setObjRegisterPass((prevObj) => {
-      const state = { ...prevObj, [event.target.id]: event.target.value };
-      validatePassword(state);
-      return state;
-    });
-  };
-
   const resetStates = () => {
     setControlButton(false);
     setObjRegisterPass(OBJ_PASS);
@@ -47,36 +39,47 @@ function App() {
     resetStates();
   };
 
-  const handleRmvRegister = (id: number) => setArrRegister(arrRegister
-    .filter((register) => register.id !== Number(id)));
+  const handleRmvRegister = (id: number) => setArrRegister(
+    arrRegister.filter((register) => register.id !== Number(id)),
+  );
 
   const validatePassword = (state: ObjPassword) => {
     const { service, login, password } = state;
-    setObjPassword({ ...objPassword,
+    setObjPassword(() => ({
+      ...objPassword,
       service: service.length > 0,
       login: login.length > 0,
       charLengthLessThanSixTeen: password.length <= 16 && password.length > 0,
       charLengthMoreThanEigth: password.length >= 8,
       letterAndNumb: validateLetterAndNumber(password),
       special: validateSpecial(password),
-    });
+    }));
   };
-  const arrSpecial = ['!', '#', '@'];
 
   const validateLetterAndNumber = (password: string) => {
-    const lett = password.split('')
-      .find((letter) => {
-        return !arrSpecial.includes(letter) && Number.isNaN(Number(letter));
-      });
-    const numb = password.split('').find((letter) => !Number.isNaN(Number(letter)));
+    const lett = password.split('').find((letter) => {
+      return !arrSpecial.includes(letter) && Number.isNaN(Number(letter));
+    });
+    const numb = password
+      .split('')
+      .find((letter) => !Number.isNaN(Number(letter)));
     return Boolean(lett) && Boolean(numb);
   };
+
+  const arrSpecial = ['!', '#', '@'];
   const validateSpecial = (password: string) => {
-    const hasSpecial = password.split('')
-      .find((letter) => (
-        arrSpecial.find((specialChar) => specialChar === letter)
-      ));
-    return (typeof hasSpecial === 'string');
+    const hasSpecial = password
+      .split('')
+      .find((letter) => arrSpecial.find((specialChar) => specialChar === letter));
+    return typeof hasSpecial === 'string';
+  };
+
+  const handleRegisterPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setObjRegisterPass((prevObj) => {
+      const state = { ...prevObj, [event.target.id]: event.target.value };
+      validatePassword(state);
+      return state;
+    });
   };
 
   return (
@@ -96,7 +99,10 @@ function App() {
         ) : (
           <>
             <BtnNewPass handleClick={ () => setControlButton(true) } />
-            <ManagedPassList state={ arrRegister } removeRegister={ handleRmvRegister } />
+            <ManagedPassList
+              state={ arrRegister }
+              removeRegister={ handleRmvRegister }
+            />
           </>
         )}
       </main>

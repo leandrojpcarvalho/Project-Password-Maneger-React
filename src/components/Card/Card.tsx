@@ -12,7 +12,7 @@ function Card({ objPass, removeRegister, isChecked }: CardType) {
   return (
     <div>
       <section className="card box-shadow border">
-        <a href={ url }>{ service }</a>
+        <a href={ url } rel="noreferrer" target="_blank">{ service }</a>
         <p>Login:  </p>
         <p>{login}</p>
         <p>Senha: </p>

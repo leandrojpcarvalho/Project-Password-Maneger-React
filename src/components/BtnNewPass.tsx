@@ -5,6 +5,7 @@ export type BtnFunction = {
 function BtnNewPass({ handleClick }:BtnFunction) {
   return (
     <button
+      id="test"
       className="btn new-pass"
       onClick={ handleClick }
     >

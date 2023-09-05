@@ -85,7 +85,7 @@ main > .new-pass.btn {
 
 @media only screen and ( min-width : 600px ) {
 
-  body > div {
+  body > .application {
     align-items: stretch;
     display: flex;
     flex-direction: column;

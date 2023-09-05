@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import Display from './Display/Display';
-import Preview from './preview/Preview';
 import { objIcons } from '../../assets/data-image';
 import './Form.css';
 
