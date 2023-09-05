@@ -38,4 +38,4 @@ Este Projeto foi construido em TypeScript utilizando React como gerenciador de e
 
 ## Comentários:
 
-Nesse projeto me dediquei um pouco mais a parte visual confira o [deploy](https://fastidious-selkie-f2ea62.netlify.app/)
+Nesse projeto me dediquei um pouco mais a parte visual e funcional, bem como um layout responsivo confira o [deploy](https://fastidious-selkie-f2ea62.netlify.app/)
