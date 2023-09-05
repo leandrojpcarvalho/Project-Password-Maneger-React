@@ -22,7 +22,7 @@ function Card({ objPass, removeRegister, isChecked }: CardType) {
           data-testid="remove-btn"
           className="btn"
           type="submit"
-          onClick={ ({ target: { id } }) => (removeRegister(id)) }
+          onClick={ (event) => (removeRegister(event.target.id)) }
         >
           Excluir
         </button>
